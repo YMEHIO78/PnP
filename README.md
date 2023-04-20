@@ -1,2 +1,2 @@
 # Handful of Takaaful
-Project and Portfolio
+Exploratory Research Informatics on the Islamic Insurance Market
