@@ -1,0 +1,24 @@
+Code for ISFB Files (This one's for Brunei):
+
+let
+    Source = Excel.Workbook(File.Contents("C:\Users\Yosef\Downloads\Takaful Data Reports by Country\Brunei Darussalam_Takaful Data_Download_En (1).xls"), null, true),
+    #"'Data Form F$'Print_Area1" = Source{[Name="'Data Form F$'Print_Area"]}[Data],
+    #"Changed Type" = Table.TransformColumnTypes(#"'Data Form F$'Print_Area1",{{"Column1", type text}, {"Column2", type text}, {"Column3", type text}, {"Column4", type text}, {"Column5", type text}, {"Column6", type text}, {"Column7", type text}, {"Column8", type text}, {"Column9", type text}, {"Column10", type text}, {"Column11", type text}, {"Column12", type text}, {"Column13", type text}, {"Column14", type text}, {"Column15", type text}, {"Column16", type text}, {"Column17", type text}}),
+    #"Filtered Rows2" = Table.SelectRows(#"Changed Type", each ([Column2] = " Key Indicator " or [Column2] = "Gross claims paid (Family)" or [Column2] = "Gross claims paid (General)" or [Column2] = "Gross domestic product (GDP)" or [Column2] = "Investment assets (of family fund only)" or [Column2] = "Investment income (from family fund only)" or [Column2] = "Investment income/investment assets (Family)" or [Column2] = "Investment income/net earned contribution (General)" or [Column2] = "Net profit (after taxation/zakat) (Family)" or [Column2] = "Net profit (after taxation/zakat) (General)" or [Column2] = "Operating revenues/underwriting profit (Family)" or [Column2] = "Operating revenues/underwriting profit (General)" or [Column2] = "Surplus/deficit in the Participants' Risk Fund (Family)" or [Column2] = "Surplus/deficit in the Participants' Risk Fund (General)" or [Column2] = "Total Net claims paid (Family)" or [Column2] = "Total Net claims paid (General)")),
+    #"Promoted Headers" = Table.PromoteHeaders(#"Filtered Rows2", [PromoteAllScalars=true]),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Code", type text}, {" Key Indicator ", type text}, {"Standard", type text}, {"Currency", type text}, {"Units", type text}, {"2019Q1", type text}, {"2019Q2", type text}, {"2019Q3", type text}, {"2019Q4", type text}, {"2020Q1", type text}, {"2020Q2", type text}, {"2020Q3", type text}, {"2020Q4", type text}, {"2021Q1", type text}, {"2021Q2", type text}, {"2021Q3", type text}, {"2021Q4", type text}})
+in
+    #"Changed Type1"
+
+
+
+Code for the WBAPI Files (This one's for Internet Users):
+
+let
+    Source = Csv.Document(File.Contents("C:\Users\Yosef\Downloads\wbapifiles\Internet_users_by_country_as_a_percent_data_2015-2021.csv"),[Delimiter=",", Columns=9, Encoding=1252, QuoteStyle=QuoteStyle.None]),
+    #"Changed Type" = Table.TransformColumnTypes(Source,{{"Column1", type text}, {"Column2", type text}, {"Column3", type number}, {"Column4", type number}, {"Column5", type number}, {"Column6", type number}, {"Column7", type number}, {"Column8", type number}, {"Column9", type number}}),
+    #"Promoted Headers" = Table.PromoteHeaders(#"Changed Type", [PromoteAllScalars=true]),
+    #"Changed Type1" = Table.TransformColumnTypes(#"Promoted Headers",{{"Country Code", type text}, {"Country Name", type text}, {"2015", type number}, {"2016", type number}, {"2017", type number}, {"2018", type number}, {"2019", type number}, {"2020", type number}, {"2021", type number}}),
+    #"Renamed Columns" = Table.RenameColumns(#"Changed Type1",{{"2020", "2020IUP"}})
+in
+    #"Renamed Columns"
