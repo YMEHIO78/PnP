@@ -1,0 +1,9 @@
+pip install virtualenv
+
+virtualenv /Users/y_mehio78/Downloads/psycopg2directory
+
+source /Users/y_mehio78/Downloads/psycopg2directory/bin/activate
+
+pip install psycopg2 requests
+
+deactivate
