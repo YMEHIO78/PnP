@@ -1,0 +1,57 @@
+import boto3
+import psycopg2
+
+# Spceifying our Redshift cluster credentials
+REDSHIFT_HOST = "redshift-cluster-scrape"
+REDSHIFT_PORT = "5439"
+REDSHIFT_USER = "awsuser"
+REDSHIFT_PASSWORD = "Yosef5691!"
+REDSHIFT_DATABASE = "dev"
+
+def lambda_handler(event, context):
+    # Connect to Redshift
+    conn = psycopg2.connect(
+        host=REDSHIFT_HOST,
+        port=REDSHIFT_PORT,
+        user=REDSHIFT_USER,
+        password=REDSHIFT_PASSWORD,
+        dbname=REDSHIFT_DATABASE
+    )
+    
+    # Replacing [tablename] with the appropriate table name:
+    select_query = 'SELECT * FROM "dev"."public"."[tablename]";'
+
+    # Replacing [filepath] with the appropriate file path:
+    copy_query = """
+    COPY dev.public.gdpusd FROM '[filepath].csv' IAM_ROLE 'arn:aws:iam::643088293235:role/RedshiftRole1' 
+    FORMAT AS CSV DELIMITER ',' 
+    QUOTE '"' 
+    REGION AS 'us-east-2';
+    """
+
+    try:
+        # Execute the queries
+        with conn.cursor() as cur:
+            cur.execute(select_query)
+            select_results = cur.fetchall()
+            cur.execute(copy_query)
+        
+        # Committing our changes and closing the connection
+        conn.commit()
+        conn.close()
+        
+        print("Select query results:")
+        print(select_results)
+        print("Copy command executed successfully.")
+        
+    except Exception as e:
+        print("Error executing queries:")
+        print(e)
+        conn.rollback()
+        conn.close()
+        raise
+
+    return {
+        "statusCode": 200,
+        "body": "Queries executed successfully."
+    }
