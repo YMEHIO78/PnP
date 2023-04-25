@@ -1,0 +1,12 @@
+#Ensure that the aws.s3 package is installed in R studio before running.
+
+Sys.setenv(
+  
+  "AWS_ACCESS_KEY_ID" = 'AKIAZLOYMTVZRVEWOUCJ',
+  "AWS_SECRET_ACCESS_KEY" = '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',
+  "AWS_DEFAULT_REGION" = "Global"
+)
+
+test_data <- aws.s3::s3read_using(FUN = bedp.csv,
+                                               object = 'wbapibucket2/Business_extent_of_disclosure_index_(%)_data_2015-2021.csv',
+                                               bucket = 'wbapibucket2')
