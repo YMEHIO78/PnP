@@ -1,0 +1,9 @@
+#Simply input the desired credentials where needed: 
+
+SELECT * FROM "dev"."public"."[tablename]]";
+
+
+COPY dev.public.[tablename] FROM '[filepath].csv' IAM_ROLE 'arn:aws:iam::643088293235:role/RedshiftRole1'
+FORMAT AS CSV DELIMITER ','
+QUOTE '"'
+REGION AS 'us-east-2'
