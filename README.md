@@ -74,6 +74,42 @@ Renamed all columns (across sheets) for 2020 and 2021 to “2020/2021[abbrev.for
 
 From this data, sheets were made for each country “in-common” between the data sources (Bahrain, Brunei, Jordan, Malaysia, Nigeria, Saudi Arabia, Turkey, United Arab Emirates) and a final sheet was created consisting of a map with each country of the world, colored in its borders, and a list of the countries tied to a table of key metrics; this way, when a country would be clicked on the map, the table would display that country’s (and only that country’s) key metrics, and vice-versa; when a country was clicked on the table, the map will automatically highlight the country and zoom in on it.
 
+
+Here is a concluding, brief description of each file and its purpose:
+RScript
+R Script for attempting connection directly from S3 to PowerBI
+
+
+PowerQuery script
+PowerQuery scripts (one example/template for each datasource (IFSB & WBAPI sourced sheets))
+
+
+LambdaFunction 1 script:
+Python script for the 1st Lambda function (WBAPI -> S3) which, upon error+workaround, was adapted to a Jupyter Notebook
+
+wbgapi terminal convo
+Conversation with the terminal for downloading wbgapi package to the system
+
+LambdaFunction2 script
+Python script for the 2nd Lambda function which, upon its error+workaround, had to be adapted to a Jupyter NB.
+
+SQL Copy Statement Cookie Cutter
+Cookiecutter template for copying data from S3 into Redshift table.
+
+psycopg2,requests policy JSON
+the JSON policy which enables the psycopg2,requests PiPs to funciton in their python script.
+
+psycopg2requeststerminalscript
+Terminal code for downloading psycopg2request package to the system.
+
+worldbankAPI policy JSON
+the JSON code for the worldbankAPI policy
+
+
+
+
+
+
 Notable Mentions: Users, Roles, Permissions, Policies.
 
 
